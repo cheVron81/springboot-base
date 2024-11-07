@@ -1,9 +1,10 @@
 package chevron81.barebone.controller;
 
+import chevron81.barebone.api.UrlConstants;
+import chevron81.barebone.api.controller.HealthCheckController;
 import chevron81.barebone.util.Health;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -18,18 +19,6 @@ class HealthCheckControllerTests {
 
     final String HTTP_LOCALHOST = "http://localhost:";
 
-    @Value("${health.ping.path}")
-    @SuppressWarnings("unused")
-    private String pingPath;
-
-    @Value("${health.status.path}")
-    @SuppressWarnings("unused")
-    private String statusPath;
-
-    @Value("${health.base.path}")
-    @SuppressWarnings("unused")
-    private String basePath;
-
     @LocalServerPort
     @SuppressWarnings("unused")
     private int port;
@@ -40,7 +29,7 @@ class HealthCheckControllerTests {
 
     @Test
     void checkPing() {
-        final String url = this.HTTP_LOCALHOST + this.port + this.basePath + this.pingPath;
+        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH_PING;
         final ResponseEntity<String> response = this.restTemplate.getForEntity(url, String.class);
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getBody()).isEqualTo(HealthCheckController.PING_ANSWER);
@@ -48,7 +37,7 @@ class HealthCheckControllerTests {
 
     @Test
     void checkStatus() {
-        final String url = this.HTTP_LOCALHOST + this.port + this.basePath + this.statusPath;
+        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH_STATUS;
         final ResponseEntity<Health> response = this.restTemplate.getForEntity(url, Health.class);
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getBody()).isNotNull();
