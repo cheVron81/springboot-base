@@ -1,8 +1,9 @@
-<Configuration status="debug" name="barebone" packages="">
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
 
     <Properties>
-        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %p %m%n</Property>
-        <Property name="LOG_DIR">./logs</Property>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %tn %p %m%n</Property>
+        <Property name="LOG_DIR">logs</Property>
         <Property name="LOG_FILE">barebone</Property>
     </Properties>
 
@@ -24,7 +25,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="console_appender"/>
             <AppenderRef ref="file_appender"/>
         </Root>
