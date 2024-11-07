@@ -15,6 +15,10 @@ public class Health {
     String totalMemory;
     String maxMemory;
 
+    public String getStatus() {
+        return this.status;
+    }
+
     public Health() {
 
         final Runtime runtime = Runtime.getRuntime();
