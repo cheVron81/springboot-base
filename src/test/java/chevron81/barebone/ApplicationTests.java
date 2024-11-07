@@ -1,10 +1,10 @@
-package chevron81.barebonesb;
+package chevron81.barebone;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BarebonesbApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
