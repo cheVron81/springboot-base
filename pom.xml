@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>chevron81</groupId>
-    <artifactId>barebonesb</artifactId>
+    <artifactId>barebone</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>barebonesb</name>
+    <name>barebone</name>
     <description>Springboot Microservice Barebone</description>
     <url/>
     <licenses>
