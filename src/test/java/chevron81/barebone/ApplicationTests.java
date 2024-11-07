@@ -1,5 +1,6 @@
 package chevron81.barebone;
 
+import chevron81.barebone.util.Health;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,11 +22,20 @@ class ApplicationTests {
     private TestRestTemplate restTemplate;
 
     @Test
-    void shouldReturnCorrectResponseForPing() {
-        final String url = "http://localhost:" + this.port + "/ping";
+    void checkPing() {
+        final String url = "http://localhost:" + this.port + "/health/ping";
         final ResponseEntity<String> response = this.restTemplate.getForEntity(url, String.class);
         assertThat(response.getStatusCode().value()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo("pong");
+    }
+
+    @Test
+    void checkStatus() {
+        final String url = "http://localhost:" + this.port + "/health/status";
+        final ResponseEntity<Health> response = this.restTemplate.getForEntity(url, Health.class);
+        assertThat(response.getStatusCode().value()).isEqualTo(200);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getStatus()).isEqualTo(Health.RUNNING);
     }
 
     @Test

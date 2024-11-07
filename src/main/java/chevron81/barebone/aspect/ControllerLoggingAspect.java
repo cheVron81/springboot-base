@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ControllerLoggingAspect {
 
-    private static final Logger logger = LogManager.getLogger(ControllerLoggingAspect.class);
+    private static final Logger LOGGER = LogManager.getLogger(ControllerLoggingAspect.class);
 
     @Pointcut("execution(public * chevron81.barebone.controller..*(..))")
     @SuppressWarnings("unused")
@@ -25,10 +25,10 @@ public class ControllerLoggingAspect {
         final long start = System.currentTimeMillis();
         final Object[] args = joinPoint.getArgs();
         final String methodSignature = joinPoint.getSignature().toString();
-        logger.info(">>> {} - ARGS: {}", methodSignature, args);
+        ControllerLoggingAspect.LOGGER.info(">>> {} - ARGS: {}", methodSignature, args);
         final Object result = joinPoint.proceed();
         final long end = System.currentTimeMillis();
-        logger.info("<<< Duration: {} ms {} - RESULT: {}", end - start, methodSignature, result);
+        ControllerLoggingAspect.LOGGER.info("<<< Duration: {} ms {} - RESULT: {}", end - start, methodSignature, result);
         return result;
     }
 }
