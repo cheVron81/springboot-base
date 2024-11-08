@@ -14,7 +14,7 @@ public class ControllerLoggingAspect {
 
     private static final Logger LOGGER = LogManager.getLogger(ControllerLoggingAspect.class);
 
-    @Pointcut("execution(public * chevron81.barebone.controller..*(..))")
+    @Pointcut("execution(public * chevron81.barebone.api.controller..*(..))")
     @SuppressWarnings("unused")
     private void publicMethodsFromController() {
     }

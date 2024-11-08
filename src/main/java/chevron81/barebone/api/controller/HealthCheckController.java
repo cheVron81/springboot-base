@@ -15,13 +15,13 @@ public class HealthCheckController {
 
     @GetMapping(UrlConstants.HEALTH_PING_PATH)
     @SuppressWarnings("unused")
-    public ResponseEntity<String> checkPing() {
+    public ResponseEntity<String> getPing() {
         return ResponseEntity.ok(HealthCheckController.PING_ANSWER);
     }
 
     @GetMapping(UrlConstants.HEALTH_STATUS_PATH)
     @SuppressWarnings("unused")
-    public ResponseEntity<Health> getHealthCheck() {
+    public ResponseEntity<Health> getStatus() {
         return ResponseEntity.ok(new Health());
     }
 }

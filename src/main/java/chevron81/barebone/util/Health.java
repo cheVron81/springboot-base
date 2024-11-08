@@ -14,10 +14,7 @@ public class Health {
     String freeMemory;
     String totalMemory;
     String maxMemory;
-
-    public String getStatus() {
-        return this.status;
-    }
+    String availableProcessors;
 
     public Health() {
 
@@ -27,10 +24,12 @@ public class Health {
         final long freeMemory = runtime.freeMemory();
         final long totalMemory = runtime.totalMemory();
         final long maxMemory = runtime.maxMemory();
+        final int availableProcessors = runtime.availableProcessors();
 
         this.status = Health.RUNNING;
         this.freeMemory = freeMemory / (1024 * 1024) + " MB";
         this.totalMemory = totalMemory / (1024 * 1024) + " MB";
         this.maxMemory = maxMemory / (1024 * 1024) + " MB";
+        this.availableProcessors = Integer.toString(availableProcessors);
     }
 }
