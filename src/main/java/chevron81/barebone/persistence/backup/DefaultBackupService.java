@@ -14,41 +14,34 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@SuppressWarnings("unused")
 public class DefaultBackupService implements BackupService {
 
     private static final Logger LOGGER = LogManager.getLogger(DefaultBackupService.class);
     public static final String BACKUP_FILE_EXTENSION = ".sql";
 
     @Value("${database.backup.enabled}")
-    @SuppressWarnings("unused")
     protected String isBackupEnabled;
 
     @Value("${spring.datasource.url}")
-    @SuppressWarnings("unused")
     protected String jdbcUrl;
 
     @Value("${spring.datasource.username}")
-    @SuppressWarnings("unused")
     protected String user;
 
     @Value("${spring.datasource.password}")
-    @SuppressWarnings("unused")
     protected String password;
 
     @Value("${spring.datasource.platform}")
-    @SuppressWarnings("unused")
     protected String databasePlattform;
 
     @Value("${database.backup.pattern}")
-    @SuppressWarnings("unused")
     protected String backupPattern;
 
     @Value("${database.backup.keep}")
-    @SuppressWarnings("unused")
     protected Integer backupKeeping;
 
     @Value("${database.backup.path}")
-    @SuppressWarnings("unused")
     protected String backupFilePath;
 
 
