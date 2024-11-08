@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.h2.tools.Script;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +45,11 @@ public class DatabaseBackupTask {
     private String backupFilePath;
     private final String BACKUP_FILE_EXTENSION = ".sql";
 
+    @EventListener(ContextRefreshedEvent.class)
+    public void onApplicationEvent() {
+        backupDatabase();
+    }
+
     @Scheduled(cron = "${database.backup.cron}")
     public void backupDatabase() {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -58,7 +65,8 @@ public class DatabaseBackupTask {
 
     private void cleanOldBackups() {
         final File backupDir = new File(this.backupFilePath).getParentFile();
-        final File[] backupFiles = backupDir.listFiles((dir, name) -> name.startsWith(backupDir.getName()) && name.endsWith(this.BACKUP_FILE_EXTENSION));
+        final String backupPrefix = this.backupFilePath.substring(this.backupFilePath.lastIndexOf("/") + 1);
+        final File[] backupFiles = backupDir.listFiles((dir, name) -> name.startsWith(backupPrefix) && name.endsWith(this.BACKUP_FILE_EXTENSION));
 
         if (backupFiles != null && backupFiles.length > 5) {
             Arrays.sort(backupFiles, Comparator.comparingLong(File::lastModified).reversed());
