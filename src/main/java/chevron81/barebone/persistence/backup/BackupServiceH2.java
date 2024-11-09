@@ -16,7 +16,7 @@ import java.util.Date;
 @Service
 @ConditionalOnProperty(name = "spring.datasource.platform", havingValue = "h2")
 @Primary
-public class BackupServiceH2 extends DefaultBackupService implements BackupService {
+public class BackupServiceH2 extends BackupServiceBase implements BackupService {
 
     private static final Logger LOGGER = LogManager.getLogger(BackupServiceH2.class);
 
@@ -27,7 +27,7 @@ public class BackupServiceH2 extends DefaultBackupService implements BackupServi
 
         if (doBackup) {
             final SimpleDateFormat sdf = new SimpleDateFormat(this.backupPattern);
-            final String backupFile = this.backupFilePath + "-" + sdf.format(new Date()) + DefaultBackupService.BACKUP_FILE_EXTENSION;
+            final String backupFile = this.backupFilePath + "-" + sdf.format(new Date()) + BackupServiceBase.BACKUP_FILE_EXTENSION;
             try (final Connection conn = DriverManager.getConnection(this.jdbcUrl, this.user, this.password)) {
                 Script.process(conn, backupFile, "", "");
                 LOGGER.info("DATABASE BACKUP created: {}", backupFile);

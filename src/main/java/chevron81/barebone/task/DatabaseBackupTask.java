@@ -20,18 +20,13 @@ public class DatabaseBackupTask {
 
     @EventListener(ContextRefreshedEvent.class)
     public void onApplicationEvent() {
-        this.backupDatabase();
+        this.backupDatabaseAndClean();
     }
 
     @Scheduled(cron = "${database.backup.cron}")
-    public void backupDatabase() {
-        LOGGER.info("Task started: Database backup");
-        final long start = System.currentTimeMillis();
+    public void backupDatabaseAndClean() {
         this.backupService.backupDatabase();
         this.backupService.cleanOldBackups();
-        final long end = System.currentTimeMillis();
-        LOGGER.info("Task duration: {} ms", end - start);
-        LOGGER.info("Task finished: Database backup");
     }
 
 }

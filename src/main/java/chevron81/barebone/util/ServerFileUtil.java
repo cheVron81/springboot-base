@@ -7,24 +7,50 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ServerFileUtil {
 
+    private static final Logger LOGGER = LogManager.getLogger(ServerFileUtil.class);
+
+    public static void sortFilesByLastModified(final List<Path> files) {
+        files.sort(Comparator.comparingLong(path -> {
+            try {
+                return Files.getLastModifiedTime(path).toMillis();
+            } catch (final IOException e) {
+                throw new RuntimeException("Failed to get last modified time for path: " + path, e);
+            }
+        }));
+    }
+
+    public static void deleteFiles(final List<Path> filesToDelete) {
+        filesToDelete.forEach(path -> {
+            final boolean isDeleted = path.toFile().delete();
+            if (isDeleted) {
+                LOGGER.info("Deleted File: {}", path);
+            } else {
+                LOGGER.error("Failed to delete File: {}", path);
+            }
+        });
+    }
+
     public static List<Path> readFilesFromDirectoryPrefixPostfix(final String directoryPath, final String filePrefix, final String fileExtension) {
-        final Logger LOGGER = LogManager.getLogger(ServerFileUtil.class);
-        List<Path> returnValue = null;
         try (final Stream<Path> paths = Files.list(Paths.get(directoryPath))) {
-            returnValue = paths
+            return paths
                     .filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().startsWith(filePrefix) && path.getFileName().endsWith(fileExtension))
+                    .filter(path -> hasPrefixAndExtension(path, filePrefix, fileExtension))
                     .collect(Collectors.toList());
         } catch (final IOException e) {
             LOGGER.error("Failed to read files from directory: {}", directoryPath, e);
+            return List.of();
         }
-        return returnValue;
     }
 
+    private static boolean hasPrefixAndExtension(final Path path, final String prefix, final String extension) {
+        final String fileName = path.getFileName().toString();
+        return fileName.startsWith(prefix) && fileName.endsWith(extension);
+    }
 }

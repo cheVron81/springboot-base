@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @ConditionalOnProperty(name = "spring.datasource.platform", havingValue = "mysql")
 @Primary
-public class BackupServiceMySql extends DefaultBackupService implements BackupService {
+public class BackupServiceMySql extends BackupServiceBase implements BackupService {
 
     private static final Logger LOGGER = LogManager.getLogger(BackupServiceMySql.class);
 
@@ -17,9 +17,5 @@ public class BackupServiceMySql extends DefaultBackupService implements BackupSe
     public void backupDatabase() {
         LOGGER.info("MySql backup service: No specific backup implementation provided.");
     }
-
-    @Override
-    public void cleanOldBackups() {
-        LOGGER.info("MySql backup service: No specific cleanup implementation provided.");
-    }
+    
 }

@@ -7,17 +7,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
 @SuppressWarnings("unused")
-public class DefaultBackupService implements BackupService {
+public class BackupServiceBase implements BackupService {
 
-    private static final Logger LOGGER = LogManager.getLogger(DefaultBackupService.class);
+    private static final Logger LOGGER = LogManager.getLogger(BackupServiceBase.class);
     public static final String BACKUP_FILE_EXTENSION = ".sql";
 
     @Value("${database.backup.enabled}")
@@ -53,28 +50,19 @@ public class DefaultBackupService implements BackupService {
 
     @Override
     public void cleanOldBackups() {
-        final File backupDir = new File(this.backupFilePath).getParentFile();
+        final String backupDir = new File(this.backupFilePath).getParentFile().getAbsolutePath();
         final String backupPrefix = this.backupFilePath.substring(this.backupFilePath.lastIndexOf("/") + 1);
-        LOGGER.info("Scanning for old backups in: {}", backupDir.getAbsolutePath());
-        final List<Path> backupFiles = ServerFileUtil.readFilesFromDirectoryPrefixPostfix(backupDir.getAbsolutePath(), backupPrefix, DefaultBackupService.BACKUP_FILE_EXTENSION);
+        LOGGER.info("Scanning for old backups in: {}", backupDir);
+        final List<Path> backupFiles = ServerFileUtil.readFilesFromDirectoryPrefixPostfix(backupDir, backupPrefix, BackupServiceBase.BACKUP_FILE_EXTENSION);
+
         if (backupFiles != null && backupFiles.size() > this.backupKeeping) {
-            backupFiles.sort(Comparator.comparingLong(path -> {
-                try {
-                    return Files.getLastModifiedTime(path).toMillis();
-                } catch (final IOException e) {
-                    throw new RuntimeException("Failed to get last modified time for path: " + path, e);
-                }
-            }));
-            for (int i = this.backupKeeping; i < backupFiles.size(); i++) {
-                final boolean isDeleted = backupFiles.get(i).toFile().delete();
-                if (isDeleted) {
-                    LOGGER.info("Deleted old backup: {}", backupFiles.get(i));
-                } else {
-                    LOGGER.error("Failed to delete old backup: {}", backupFiles.get(i));
-                }
-            }
+            ServerFileUtil.sortFilesByLastModified(backupFiles);
+            final List<Path> filesToDelete = backupFiles.subList(this.backupKeeping, backupFiles.size());
+            ServerFileUtil.deleteFiles(filesToDelete);
         } else {
             LOGGER.info("No old backups to delete");
         }
     }
+
+
 }
