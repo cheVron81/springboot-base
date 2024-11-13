@@ -23,7 +23,7 @@ public class DatabaseBackupTask {
         this.backupDatabaseAndClean();
     }
 
-    @Scheduled(cron = "${database.backup.cron}")
+    @Scheduled(cron = "${database.backup.cron default 0 0 3 * * ?}")
     public void backupDatabaseAndClean() {
         this.backupService.backupDatabase();
         this.backupService.cleanOldBackups();

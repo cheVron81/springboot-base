@@ -17,7 +17,7 @@ public class BackupServiceBase implements BackupService {
     private static final Logger LOGGER = LogManager.getLogger(BackupServiceBase.class);
     public static final String BACKUP_FILE_EXTENSION = ".sql";
 
-    @Value("${database.backup.enabled}")
+    @Value("${database.backup.enabled:false}")
     protected String isBackupEnabled;
 
     @Value("${spring.datasource.url}")
@@ -32,19 +32,19 @@ public class BackupServiceBase implements BackupService {
     @Value("${spring.datasource.platform}")
     protected String databasePlattform;
 
-    @Value("${database.backup.pattern}")
+    @Value("${database.backup.pattern default yyyyMMdd_HHmmss}")
     protected String backupPattern;
 
-    @Value("${database.backup.keep}")
-    protected Integer backupKeeping;
+    @Value("${database.backup.keep:10}")
+    protected int backupKeeping;
 
-    @Value("${database.backup.path}")
+    @Value("${database.backup.path default ./data/backup}")
     protected String backupFilePath;
 
 
     @Override
     public void backupDatabase() {
-        LOGGER.info("Default backup service: No specific backup implementation provided.");
+        BackupServiceBase.LOGGER.info("Default backup service: No specific backup implementation provided.");
     }
 
 
@@ -52,7 +52,7 @@ public class BackupServiceBase implements BackupService {
     public void cleanOldBackups() {
         final String backupDir = new File(this.backupFilePath).getParentFile().getAbsolutePath();
         final String backupPrefix = this.backupFilePath.substring(this.backupFilePath.lastIndexOf("/") + 1);
-        LOGGER.info("Scanning for old backups in: {}", backupDir);
+        BackupServiceBase.LOGGER.info("Scanning for old backups in: {}", backupDir);
         final List<Path> backupFiles = ServerFileUtil.readFilesFromDirectoryPrefixPostfix(backupDir, backupPrefix, BackupServiceBase.BACKUP_FILE_EXTENSION);
 
         if (backupFiles != null && backupFiles.size() > this.backupKeeping) {
@@ -60,7 +60,7 @@ public class BackupServiceBase implements BackupService {
             final List<Path> filesToDelete = backupFiles.subList(this.backupKeeping, backupFiles.size());
             ServerFileUtil.deleteFiles(filesToDelete);
         } else {
-            LOGGER.info("No old backups to delete");
+            BackupServiceBase.LOGGER.info("No old backups to delete");
         }
     }
 
