@@ -1,4 +1,4 @@
-package chevron81.barebone.util;
+package chevron81.barebone.admin;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Health {
-    public final static String RUNNING = "RUNNING";
 
-    String status;
+    AppStatusEnum status;
     String freeMemory;
     String totalMemory;
     String maxMemory;
@@ -26,7 +25,7 @@ public class Health {
         final long maxMemory = runtime.maxMemory();
         final int availableProcessors = runtime.availableProcessors();
 
-        this.status = Health.RUNNING;
+        this.status = AppStatusEnum.RUNNING;
         this.freeMemory = freeMemory / (1024 * 1024) + " MB";
         this.totalMemory = totalMemory / (1024 * 1024) + " MB";
         this.maxMemory = maxMemory / (1024 * 1024) + " MB";
