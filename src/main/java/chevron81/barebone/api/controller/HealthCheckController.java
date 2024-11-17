@@ -13,7 +13,7 @@ public class HealthCheckController {
 
     public static final String PING_ANSWER = "pong";
 
-    @GetMapping(UrlConstants.HEALTH_PING_PATH)
+    @GetMapping(UrlConstants.HEALTH_PING_PART)
     public ResponseEntity<String> getPing() {
         return ResponseEntity.ok(HealthCheckController.PING_ANSWER);
     }

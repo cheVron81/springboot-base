@@ -30,7 +30,7 @@ class HealthCheckControllerTests {
 
     @Test
     void checkPing() {
-        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH_PING;
+        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH + UrlConstants.HEALTH_PING_PART;
         final ResponseEntity<String> response = this.restTemplate.getForEntity(url, String.class);
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getBody()).isEqualTo(HealthCheckController.PING_ANSWER);
@@ -38,7 +38,7 @@ class HealthCheckControllerTests {
 
     @Test
     void checkStatus() {
-        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH_STATUS;
+        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH + UrlConstants.HEALTH_STATUS_PART;
         final ResponseEntity<Health> response = this.restTemplate.getForEntity(url, Health.class);
         assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getBody()).isNotNull();
