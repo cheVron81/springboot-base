@@ -32,13 +32,13 @@ public class BackupServiceBase implements BackupService {
     @Value("${spring.datasource.platform}")
     protected String databasePlattform;
 
-    @Value("${database.backup.pattern default yyyyMMdd_HHmmss}")
+    @Value("${database.backup.pattern:yyyyMMdd_HHmmss}")
     protected String backupPattern;
 
     @Value("${database.backup.keep:10}")
     protected int backupKeeping;
 
-    @Value("${database.backup.path default ./data/backup}")
+    @Value("${database.backup.path:./data/backup}")
     protected String backupFilePath;
 
 
