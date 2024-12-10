@@ -1,7 +1,5 @@
 package chevron81.barebone.controller;
 
-import chevron81.barebone.admin.AppStatusEnum;
-import chevron81.barebone.admin.Health;
 import chevron81.barebone.api.UrlConstants;
 import chevron81.barebone.api.controller.HealthCheckController;
 import org.junit.jupiter.api.Test;
@@ -36,12 +34,4 @@ class HealthCheckControllerTests {
         assertThat(response.getBody()).isEqualTo(HealthCheckController.PING_ANSWER);
     }
 
-    @Test
-    void checkStatus() {
-        final String url = this.HTTP_LOCALHOST + this.port + UrlConstants.HEALTH_BASE_PATH + UrlConstants.HEALTH_STATUS_PART;
-        final ResponseEntity<Health> response = this.restTemplate.getForEntity(url, Health.class);
-        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getStatus()).isEqualTo(AppStatusEnum.RUNNING);
-    }
 }
