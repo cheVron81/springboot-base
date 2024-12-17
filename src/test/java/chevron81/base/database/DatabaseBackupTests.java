@@ -1,6 +1,6 @@
-package chevron81.barebone.database;
+package chevron81.base.database;
 
-import chevron81.barebone.persistence.backup.BackupServiceMySql;
+import chevron81.base.persistence.backup.BackupServiceMySql;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

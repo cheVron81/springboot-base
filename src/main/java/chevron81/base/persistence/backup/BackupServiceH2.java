@@ -1,4 +1,4 @@
-package chevron81.barebone.persistence.backup;
+package chevron81.base.persistence.backup;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +16,7 @@ import java.util.Date;
 @Service
 @ConditionalOnProperty(name = "spring.datasource.platform", havingValue = "h2")
 @Primary
+@SuppressWarnings("unused")
 public class BackupServiceH2 extends BackupServiceBase implements BackupService {
 
     private static final Logger LOGGER = LogManager.getLogger(BackupServiceH2.class);

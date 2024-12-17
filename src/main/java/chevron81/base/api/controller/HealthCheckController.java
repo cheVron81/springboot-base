@@ -1,6 +1,6 @@
-package chevron81.barebone.api.controller;
+package chevron81.base.api.controller;
 
-import chevron81.barebone.api.UrlConstants;
+import chevron81.base.api.UrlConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

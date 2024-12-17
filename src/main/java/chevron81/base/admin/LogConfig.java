@@ -1,4 +1,4 @@
-package chevron81.barebone.admin;
+package chevron81.base.admin;
 
 import lombok.Getter;
 import lombok.Setter;

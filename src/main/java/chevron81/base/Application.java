@@ -1,4 +1,4 @@
-package chevron81.barebone;
+package chevron81.base;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

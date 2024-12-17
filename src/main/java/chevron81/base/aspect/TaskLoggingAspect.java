@@ -1,4 +1,4 @@
-package chevron81.barebone.aspect;
+package chevron81.base.aspect;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class ControllerLoggingAspect {
+@SuppressWarnings("unused")
+public class TaskLoggingAspect {
 
-    private static final Logger LOGGER = LogManager.getLogger(ControllerLoggingAspect.class);
+    private static final Logger LOGGER = LogManager.getLogger(TaskLoggingAspect.class);
 
-    @Pointcut("execution(public * chevron81.barebone.api.controller..*(..))")
+    @Pointcut("execution(public * chevron81.base.task..*(..))")
     @SuppressWarnings("unused")
     private void publicMethodsFromController() {
     }
@@ -25,10 +26,10 @@ public class ControllerLoggingAspect {
         final long start = System.currentTimeMillis();
         final Object[] args = joinPoint.getArgs();
         final String methodSignature = joinPoint.getSignature().toString();
-        ControllerLoggingAspect.LOGGER.info(">>> {} - ARGS: {}", methodSignature, args);
+        LOGGER.info("TASK {} started", methodSignature);
         final Object result = joinPoint.proceed();
         final long end = System.currentTimeMillis();
-        ControllerLoggingAspect.LOGGER.info("<<< Duration: {} ms {} - RESULT: {}", end - start, methodSignature, result);
+        LOGGER.info("TASK {} finished in {} ms", methodSignature, end - start);
         return result;
     }
 }

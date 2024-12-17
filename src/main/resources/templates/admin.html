@@ -2,29 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
     <title>Administration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div>
+<div class="container">
     <h2>Administration</h2><br/>
     <h1 th:text="${message}">greetings message</h1>
     <form action="#" th:action="@{/admin}" th:object="${logConfig}" method="post">
-        <table>
+        <table class="table">
             <tr>
-                <td><label for="loggerName">Logger Name:</label></td>
-                <td><input type="text" value="ALL" id="loggerName" th:field="*{loggerName}" required/></td>
+                <td>
+                    <label for="loggerName">Logger Name:</label>
+                </td>
+                <td>
+                    <select id="loggerName" th:field="*{loggerName}" class="form-control" required>
+                        <option value="ALL">ALL</option>
+                        <option th:each="logger : ${loggers}" th:value="${logger.key}" th:text="${logger.key}">Logger</option>
+                    </select>
+                </td>
             </tr>
             <tr>
-                <td><label for="level">Log Level:</label></td>
-                <td><input type="text" id="level" th:field="*{level}" required/></td>
+                <td>
+                    <label for="level">Log Level:</label>
+                </td>
+                <td>
+                    <select id="level" th:field="*{level}" class="form-control" required>
+                        <option th:each="level : ${logLevels}" th:value="${level}" th:text="${level}">Loglevel</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit">Set Log Level</button>
+                    <button type="submit" class="btn btn-primary">Set Log Level</button>
                 </td>
             </tr>
         </table>
     </form>
-    <p th:text="${message}"></p>
 </div>
+<!-- Bootstrap JS and dependencies -->
+<!--
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+-->
 </body>
 </html>

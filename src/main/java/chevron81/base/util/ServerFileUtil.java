@@ -1,4 +1,4 @@
-package chevron81.barebone.util;
+package chevron81.base.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

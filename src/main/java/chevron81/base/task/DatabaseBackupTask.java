@@ -1,6 +1,6 @@
-package chevron81.barebone.task;
+package chevron81.base.task;
 
-import chevron81.barebone.persistence.backup.BackupService;
+import chevron81.base.persistence.backup.BackupService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

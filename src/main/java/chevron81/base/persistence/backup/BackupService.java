@@ -1,4 +1,4 @@
-package chevron81.barebone.persistence.backup;
+package chevron81.base.persistence.backup;
 
 public interface BackupService {
     void backupDatabase();

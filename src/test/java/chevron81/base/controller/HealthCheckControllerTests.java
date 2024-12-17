@@ -1,7 +1,7 @@
-package chevron81.barebone.controller;
+package chevron81.base.controller;
 
-import chevron81.barebone.api.UrlConstants;
-import chevron81.barebone.api.controller.HealthCheckController;
+import chevron81.base.api.UrlConstants;
+import chevron81.base.api.controller.HealthCheckController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
